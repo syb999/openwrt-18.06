@@ -1,0 +1,92 @@
+--- a/feeds/luci/modules/luci-mod-admin-full/luasrc/model/cbi/admin_network/wifi.lua
++++ b/feeds/luci/modules/luci-mod-admin-full/luasrc/model/cbi/admin_network/wifi.lua
+@@ -138,6 +138,7 @@
+ s:tab("general", translate("General Setup"))
+ s:tab("macfilter", translate("MAC-Filter"))
+ s:tab("advanced", translate("Advanced Settings"))
++s:tab("rssi", translate("low RSSI disconnect"))
+ 
+ st = s:taboption("general", DummyValue, "__status", translate("Status"))
+ st.template = "admin_network/wifi_status"
+@@ -358,6 +359,7 @@
+ s:tab("encryption", translate("Wireless Security"))
+ s:tab("macfilter", translate("MAC-Filter"))
+ s:tab("advanced", translate("Advanced Settings"))
++s:tab("rssi", translate("low RSSI disconnect"))
+ 
+ mode = s:taboption("general", ListValue, "mode", translate("Mode"))
+ mode.override_values = true
+@@ -492,6 +494,46 @@
+ 	wmm:depends({mode="ap-wds"})
+ 	wmm.default = wmm.enabled
+ 
++	signal_connect = s:taboption("rssi", Value, "signal_connect",
++		translate("signal_connect"),
++		translate("signal accessible value"))
++	signal_connect:depends({mode="ap"},{mode="ap-wds"},{mode="mesh"})
++	signal_connect.placeholder = "-60"
++	signal_connect = "range(-10,-90)"
++	signal_connect = true
++
++	signal_stay = s:taboption("rssi", Value, "signal_stay",
++		translate("signal_stay"),
++		translate("signal automatic disconnection value"))
++	signal_stay:depends({mode="ap"},{mode="ap-wds"},{mode="mesh"})
++	signal_stay.placeholder = "-70"
++	signal_stay = "range(-30,-90)"
++	signal_stay = true
++
++	signal_strikes = s:taboption("rssi", Value, "signal_strikes",
++		translate("signal_strikes"),
++		translate("signal strikes times"))
++	signal_strikes:depends({mode="ap"},{mode="ap-wds"},{mode="mesh"})
++	signal_strikes.placeholder = "3"
++	signal_strikes = "range(1,10)"
++	signal_strikes = true
++
++	signal_poll_time = s:taboption("rssi", Value, "signal_poll_time",
++		translate("signal_poll_time"),
++		translate("signal polling times"))
++	signal_poll_time:depends({mode="ap"},{mode="ap-wds"},{mode="mesh"})
++	signal_poll_time.placeholder = "5"
++	signal_poll_time = "range(3,10)"
++	signal_poll_time = true
++
++	signal_drop_reason = s:taboption("rssi", Value, "signal_drop_reason",
++		translate("signal_drop_reason"),
++		translate("signal drop reason"))
++	signal_drop_reason:depends({mode="ap"},{mode="ap-wds"},{mode="mesh"})
++	signal_drop_reason.placeholder = "3"
++	signal_drop_reason = "range(2,10)"
++	signal_drop_reason = true
++
+ 	isolate = s:taboption("advanced", Flag, "isolate", translate("Isolate Clients"),
+ 	 translate("Prevents client-to-client communication"))
+ 	isolate:depends({mode="ap"})
+--- a/feeds/luci/modules/luci-base/po/zh-cn/base.po
++++ b/feeds/luci/modules/luci-base/po/zh-cn/base.po
+@@ -3974,6 +3974,24 @@
+ msgid "« Back"
+ msgstr "« 后退"
+ 
++msgid "low RSSI disconnect"
++msgstr "弱信号自动剔除"
++
++msgid "signal accessible value"
++msgstr "允许接入的信号值（不建议超过-80dbm，默认-60）"
++
++msgid "signal automatic disconnection value"
++msgstr "自动剔除弱信号（不建议超过-80dbm，默认-70）"
++
++msgid "signal strikes times"
++msgstr "信号检测次数（默认3）"
++
++msgid "signal polling times"
++msgstr "信号轮询次数（默认5）"
++
++msgid "signal_drop_reason"
++msgstr "信号检测次数（默认3）"
++
+ #~ msgid "<abbr title='Pairwise: %s / Group: %s'>%s - %s</abbr>"
+ #~ msgstr "<abbr title='Pairwise: %s / Group: %s'>%s - %s</abbr>"
+ 
