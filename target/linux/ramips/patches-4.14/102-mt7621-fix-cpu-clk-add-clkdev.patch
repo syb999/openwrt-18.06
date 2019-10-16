@@ -192,15 +192,17 @@
  #include <asm/time.h>
  
  #include "common.h"
-@@ -19,7 +18,7 @@
+@@ -19,9 +18,7 @@
  void __init plat_time_init(void)
  {
  	ralink_of_remap();
 -
+-	mips_hpt_frequency = 880000000 / 2;
+-
 +	ralink_clk_init();
- 	mips_hpt_frequency = 880000000 / 2;
- 
  	of_clk_init(NULL);
+ 	timer_probe();
+ }
 --- /dev/null
 +++ b/include/dt-bindings/clock/mt7621-clk.h
 @@ -0,0 +1,18 @@
