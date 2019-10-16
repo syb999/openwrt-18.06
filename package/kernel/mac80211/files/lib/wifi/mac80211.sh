@@ -9,10 +9,11 @@ lookup_phy() {
 	local devpath
 	config_get devpath "$device" path
 	[ -n "$devpath" ] && {
-		for phy in $(ls /sys/class/ieee80211 2>/dev/null); do
-			case "$(readlink -f /sys/class/ieee80211/$phy/device)" in
-				*$devpath) return;;
-			esac
+		for _phy in /sys/devices/$devpath/ieee80211/phy*; do
+			[ -e "$_phy" ] && {
+				phy="${_phy##*/}"
+				return
+			}
 		done
 	}
 
@@ -81,15 +82,20 @@ detect_mac80211() {
 		htmode=""
 		ht_capab=""
 
-		iw phy "$dev" info | grep -q 'Capabilities:' && htmode=HT20
+		ssnm=_$(cat /sys/class/ieee80211/${dev}/macaddress | sed 's/.[0-9A-Fa-f]:.[0-9A-Fa-f]:.[0-9A-Fa-f]:\(.[0-9A-Fa-f]\):\(.[0-9A-Fa-f]\):\(.[0-9A-Fa-f]\)/\1\2\3/g' | tr :[a-z] :[A-Z])
 
-		iw phy "$dev" info | grep -q '5180 MHz' && {
-			mode_band="a"
+		iw phy "$dev" info | grep -q 'Capabilities:' && htmode=HT20
+		iw phy "$dev" info | grep -q '2412 MHz' || { mode_band="a"; channel="36"; }
+
+		vht_cap=$(iw phy "$dev" info | grep -c 'VHT Capabilities')
+		cap_5ghz=$(iw phy "$dev" info | grep -c "Band 2")
+		[ "$vht_cap" -gt 0 -a "$cap_5ghz" -gt 0 ] && {
+			mode_band="a";
 			channel="36"
-			iw phy "$dev" info | grep -q 'VHT Capabilities' && htmode="VHT80"
+			htmode="VHT80"
 		}
 
-		[ -n "$htmode" ] && ht_capab="set wireless.radio${devidx}.htmode=$htmode"
+		[ -n $htmode ] && append ht_capab "	option htmode	$htmode" "$N"
 
 		if [ -x /usr/bin/readlink -a -h /sys/class/ieee80211/${dev} ]; then
 			path="$(readlink -f /sys/class/ieee80211/${dev}/device)"
@@ -101,29 +107,46 @@ detect_mac80211() {
 			case "$path" in
 				platform*/pci*) path="${path##platform/}";;
 			esac
-			dev_id="set wireless.radio${devidx}.path='$path'"
+			dev_id="	option path	'$path'"
 		else
-			dev_id="set wireless.radio${devidx}.macaddr=$(cat /sys/class/ieee80211/${dev}/macaddress)"
+			dev_id="	option macaddr	$(cat /sys/class/ieee80211/${dev}/macaddress)"
 		fi
 
-		uci -q batch <<-EOF
-			set wireless.radio${devidx}=wifi-device
-			set wireless.radio${devidx}.type=mac80211
-			set wireless.radio${devidx}.channel=${channel}
-			set wireless.radio${devidx}.hwmode=11${mode_band}
-			${dev_id}
-			${ht_capab}
-			set wireless.radio${devidx}.disabled=1
+		if [ x$mode_band == x"g" ]; then
+			ssid_wlan="_2.4G"
+		else
+			ssid_wlan="_5G"
+		fi
 
-			set wireless.default_radio${devidx}=wifi-iface
-			set wireless.default_radio${devidx}.device=radio${devidx}
-			set wireless.default_radio${devidx}.network=lan
-			set wireless.default_radio${devidx}.mode=ap
-			set wireless.default_radio${devidx}.ssid=OpenWrt
-			set wireless.default_radio${devidx}.encryption=none
+		cat <<EOF
+config wifi-device  radio$devidx
+	option type     mac80211
+	option channel  ${channel}
+	option hwmode	11${mode_band}
+	option txpower 20
+	option country CN
+	option legacy_rates 0
+$dev_id
+$ht_capab
+	# REMOVE THIS LINE TO ENABLE WIFI:
+	option disabled 0
+
+config wifi-iface
+	option device   radio$devidx
+	option network  lan
+	option mode     ap
+	option ssid     OpenWrt${ssid_wlan}${ssnm}
+	option encryption none
+	option disassoc_low_ack 0
+	option isolate 0
+	option signal_connect -60
+	option signal_stay -70
+	option signal_strikes 3
+	option signal_poll_time 5
+	option signal_drop_reason 3
+
 EOF
-		uci -q commit wireless
-
-		devidx=$(($devidx + 1))
+	devidx=$(($devidx + 1))
 	done
 }
+
