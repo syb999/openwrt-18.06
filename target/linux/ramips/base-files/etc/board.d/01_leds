@@ -547,6 +547,10 @@ youku-yk1)
 	set_usb_led "$boardname:blue:usb"
 	ucidef_set_led_switch "wan" "wan" "$boardname:blue:wan" "switch0" "0x10"
 	;;
+daishuyun)
+	ucidef_set_led_default "light" "light" "$boardname:green:status" "1"
+	;;
+
 esac
 
 board_config_flush

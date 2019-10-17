@@ -143,7 +143,7 @@ define Device/dch-m225
 	seama-seal -m "signature=wapn22_dlink.2013gui_dap1320b" | \
 	check-size $$$$(IMAGE_SIZE)
   DEVICE_TITLE := D-Link DCH-M225
-  DEVICE_PACKAGES := kmod-mt76 kmod-sound-core kmod-sound-mt7620 kmod-i2c-ralink
+  DEVICE_PACKAGES := kmod-mt76x2 kmod-sound-core kmod-sound-mt7620 kmod-i2c-ralink
 endef
 TARGET_DEVICES += dch-m225
 
@@ -233,7 +233,7 @@ define Device/gl-mt300a
   DTS := GL-MT300A
   IMAGE_SIZE := $(ralink_default_fw_size_16M)
   DEVICE_TITLE := GL-Inet GL-MT300A
-  DEVICE_PACKAGES := kmod-usb2 kmod-usb-ohci kmod-mt76
+  DEVICE_PACKAGES := kmod-usb2 kmod-usb-ohci kmod-mt76x2
 endef
 TARGET_DEVICES += gl-mt300a
 
@@ -248,7 +248,7 @@ define Device/gl-mt300n
   DTS := GL-MT300N
   IMAGE_SIZE := $(ralink_default_fw_size_16M)
   DEVICE_TITLE := GL-Inet GL-MT300N
-  DEVICE_PACKAGES := kmod-usb2 kmod-usb-ohci kmod-mt76
+  DEVICE_PACKAGES := kmod-usb2 kmod-usb-ohci kmod-mt76x2
 endef
 TARGET_DEVICES += gl-mt300n
 
@@ -256,7 +256,7 @@ define Device/gl-mt750
   DTS := GL-MT750
   IMAGE_SIZE := $(ralink_default_fw_size_16M)
   DEVICE_TITLE := GL-Inet GL-MT750
-  DEVICE_PACKAGES := kmod-usb2 kmod-usb-ohci kmod-mt76
+  DEVICE_PACKAGES := kmod-usb2 kmod-usb-ohci kmod-mt76x2
 endef
 TARGET_DEVICES += gl-mt750
 
@@ -377,7 +377,7 @@ TARGET_DEVICES += mt7620a_v22sg
 define Device/mzk-750dhp
   DTS := MZK-750DHP
   DEVICE_TITLE := Planex MZK-750DHP
-  DEVICE_PACKAGES := kmod-mt76
+  DEVICE_PACKAGES := kmod-mt76x2
 endef
 TARGET_DEVICES += mzk-750dhp
 
@@ -390,7 +390,7 @@ TARGET_DEVICES += mzk-ex300np
 define Device/mzk-ex750np
   DTS := MZK-EX750NP
   DEVICE_TITLE := Planex MZK-EX750NP
-  DEVICE_PACKAGES := kmod-mt76
+  DEVICE_PACKAGES := kmod-mt76x2
 endef
 TARGET_DEVICES += mzk-ex750np
 
@@ -411,7 +411,7 @@ TARGET_DEVICES += oy-0001
 define Device/psg1208
   DTS := PSG1208
   DEVICE_TITLE := Phicomm PSG1208
-  DEVICE_PACKAGES := kmod-mt76
+  DEVICE_PACKAGES := kmod-mt76x2
 endef
 TARGET_DEVICES += psg1208
 
@@ -497,7 +497,7 @@ define Device/ravpower_wd03
   DTS := WD03
   IMAGE_SIZE := $(ralink_default_fw_size_8M)
   DEVICE_TITLE := Ravpower WD03
-  DEVICE_PACKAGES := kmod-usb2 kmod-usb-ohci kmod-mt76 kmod-usb-ehci
+  DEVICE_PACKAGES := kmod-usb2 kmod-usb-ohci kmod-mt76x2 kmod-usb-ehci
 endef
 TARGET_DEVICES += ravpower_wd03
 
@@ -609,14 +609,14 @@ define Device/we1026-5g-16m
   IMAGE_SIZE := 16777216
   SUPPORTED_DEVICES += we1026-5g-16m
   DEVICE_TITLE := Zbtlink ZBT-WE1026-5G (16M)
-  DEVICE_PACKAGES := kmod-usb2 kmod-usb-ohci kmod-mt76 kmod-sdhci-mt7620
+  DEVICE_PACKAGES := kmod-usb2 kmod-usb-ohci kmod-mt76x2 kmod-sdhci-mt7620
 endef
 TARGET_DEVICES += we1026-5g-16m
 
 define Device/zbt-ape522ii
   DTS := ZBT-APE522II
   DEVICE_TITLE := Zbtlink ZBT-APE522II
-  DEVICE_PACKAGES := kmod-mt76
+  DEVICE_PACKAGES := kmod-mt76x2
 endef
 TARGET_DEVICES += zbt-ape522ii
 
@@ -644,7 +644,7 @@ define Device/zbt-we826-16M
   IMAGE_SIZE := $(ralink_default_fw_size_16M)
   SUPPORTED_DEVICES += zbt-we826
   DEVICE_TITLE := Zbtlink ZBT-WE826 (16M)
-  DEVICE_PACKAGES := kmod-usb2 kmod-usb-ohci kmod-mt76 kmod-sdhci-mt7620 
+  DEVICE_PACKAGES := kmod-usb2 kmod-usb-ohci kmod-mt76x2 kmod-sdhci-mt7620 
 endef
 TARGET_DEVICES += zbt-we826-16M
 
@@ -652,7 +652,7 @@ define Device/zbt-we826-32M
   DTS := ZBT-WE826-32M
   IMAGE_SIZE := $(ralink_default_fw_size_32M)
   DEVICE_TITLE := Zbtlink ZBT-WE826 (32M)
-  DEVICE_PACKAGES := kmod-usb2 kmod-usb-ohci kmod-mt76 kmod-sdhci-mt7620
+  DEVICE_PACKAGES := kmod-usb2 kmod-usb-ohci kmod-mt76x2 kmod-sdhci-mt7620
 endef
 TARGET_DEVICES += zbt-we826-32M
 
@@ -667,3 +667,11 @@ define Device/zte-q7
   DEVICE_TITLE := ZTE Q7
 endef
 TARGET_DEVICES += zte-q7
+
+define Device/daishuyun
+  DTS := DAISHUYUN
+  IMAGE_SIZE := $(ralink_default_fw_size_32M)
+  DEVICE_TITLE := DAISHUYUN
+  DEVICE_PACKAGES := kmod-usb2 kmod-usb-ohci kmod-mt76x2 kmod-sdhci-mt7620 kmod-usb-ledtrig-usbport
+endef
+TARGET_DEVICES += daishuyun

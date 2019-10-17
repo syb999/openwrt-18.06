@@ -343,6 +343,9 @@ get_status_led() {
 	zbt-wg3526-32M)
 		status_led="zbt-wg3526:green:status"
 		;;
+	daishuyun)
+		status_led="$boardname:green:status"
+		;;
 	esac
 }
 

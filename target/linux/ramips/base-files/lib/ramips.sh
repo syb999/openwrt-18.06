@@ -721,6 +721,9 @@ ramips_board_detect() {
 	*"YK1")
 		name="youku-yk1"
 		;;
+	*"DAISHUYUN")
+		name="daishuyun"
+		;;
 	esac
 
 	# use generic board detect if no name is set
