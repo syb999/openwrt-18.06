@@ -134,8 +134,8 @@ detect_mac80211() {
 			set wireless.default_radio${devidx}.encryption=none
 			set wireless.default_radio${devidx}.disassoc_low_ack=0
 			set wireless.default_radio${devidx}.isolate=0
-			set wireless.default_radio${devidx}.signal_connect=-60
-			set wireless.default_radio${devidx}.signal_stay=-70
+			set wireless.default_radio${devidx}.signal_connect=-70
+			set wireless.default_radio${devidx}.signal_stay=-80
 			set wireless.default_radio${devidx}.signal_strikes=3
 			set wireless.default_radio${devidx}.signal_poll_time=5
 			set wireless.default_radio${devidx}.signal_drop_reason=3

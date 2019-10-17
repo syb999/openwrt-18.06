@@ -24,17 +24,17 @@
 +		translate("signal_connect"),
 +		translate("signal accessible value"))
 +	signal_connect:depends({mode="ap"},{mode="ap-wds"},{mode="mesh"})
-+	signal_connect.placeholder = "-60"
++	signal_connect.placeholder = "-70"
 +	--signal_connect.datatype = "range(-10,-90)"
-+	signal_connect.default = "-60"
++	signal_connect.default = "-70"
 +
 +	signal_stay = s:taboption("rssi", Value, "signal_stay",
 +		translate("signal_stay"),
 +		translate("signal automatic disconnection value"))
 +	signal_stay:depends({mode="ap"},{mode="ap-wds"},{mode="mesh"})
-+	signal_stay.placeholder = "-70"
++	signal_stay.placeholder = "-80"
 +	--signal_stay.datatype = "range(-30,-90)"
-+	signal_stay.default = "-70"
++	signal_stay.default = "-80"
 +
 +	signal_strikes = s:taboption("rssi", Value, "signal_strikes",
 +		translate("signal_strikes"),
@@ -82,10 +82,10 @@
 +msgstr "弱信号自动剔除"
 +
 +msgid "signal accessible value"
-+msgstr "允许接入的信号值（不建议超过-80dbm，默认-60）"
++msgstr "允许接入的信号值（不建议超过-80dBm，默认-70dBm）"
 +
 +msgid "signal automatic disconnection value"
-+msgstr "自动剔除弱信号（不建议超过-80dbm，默认-70）"
++msgstr "自动剔除弱信号（不建议超过-85dBm，默认-80dBm）"
 +
 +msgid "signal strikes times"
 +msgstr "信号检测次数（默认3）"
