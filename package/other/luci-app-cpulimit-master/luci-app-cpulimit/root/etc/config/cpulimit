@@ -1,0 +1,19 @@
+config list
+	option enabled '0'
+	option exename 'vsftpd'
+	option limit '50'
+
+config list
+	option enabled '0'
+	option exename 'smbd'
+	option limit '50'
+
+config list
+	option enabled '0'
+	option exename 'aria2c'
+	option limit '50'
+
+config list
+	option enabled '0'
+	option exename 'transmission-daemon'
+	option limit '50'
