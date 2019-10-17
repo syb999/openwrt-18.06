@@ -93,7 +93,7 @@
 +msgid "signal polling times"
 +msgstr "信号轮询次数（默认5）"
 +
-+msgid "signal_drop_reason"
++msgid "signal drop reason"
 +msgstr "信号检测次数（默认3）"
 +
  #~ msgid "<abbr title='Pairwise: %s / Group: %s'>%s - %s</abbr>"
