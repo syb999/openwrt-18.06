@@ -239,13 +239,13 @@ This is a adaptation of Googles band steering
  	case WLAN_FC_STYPE_ASSOC_REQ:
  		wpa_printf(MSG_DEBUG, "mgmt::assoc_req");
 -		handle_assoc(hapd, mgmt, len, 0, ssi_signal);
-+		handle_assoc(hapd, mgmt, len, 0, fi, fi->ssi_signal);
++		handle_assoc(hapd, mgmt, len, 0, ssi_signal, fi->ssi_signal);
  		ret = 1;
  		break;
  	case WLAN_FC_STYPE_REASSOC_REQ:
  		wpa_printf(MSG_DEBUG, "mgmt::reassoc_req");
 -		handle_assoc(hapd, mgmt, len, 1, ssi_signal);
-+		handle_assoc(hapd, mgmt, len, 1, fi, fi->ssi_signal);
++		handle_assoc(hapd, mgmt, len, 1, ssi_signal, fi->ssi_signal);
  		ret = 1;
  		break;
  	case WLAN_FC_STYPE_DISASSOC:
