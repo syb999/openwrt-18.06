@@ -15,4 +15,4 @@ PKG_RELEASE:=14
 
 include $(TOPDIR)/feeds/luci/luci.mk
 
-$(eval $(call BuildPackage,luci-app-cpulimit))
+# call BuildPackage - OpenWrt buildroot signature
