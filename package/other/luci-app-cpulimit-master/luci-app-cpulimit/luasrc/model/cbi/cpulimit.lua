@@ -36,8 +36,4 @@ limit:value("30")
 limit:value("20")
 limit:value("10")
 
-function m.on_after_commit(self)
-	os.execute("/etc/init.d/cpulimit restart >/dev/null 2>&1 &")
-end
-
 return m

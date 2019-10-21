@@ -38,11 +38,7 @@
 #include <string.h>
 #include <sys/stat.h>
 #include <sys/time.h>
-
-#if defined(__GLIBC__) || defined(__UCLIBC__)
-#include <sys/sysctl.h>
-#endif
-
+#include <linux/sysctl.h>
 #include <sys/resource.h>
 #include <sys/types.h>
 #include <sys/wait.h>

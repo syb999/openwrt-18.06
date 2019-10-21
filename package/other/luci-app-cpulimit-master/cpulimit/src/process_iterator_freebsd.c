@@ -19,10 +19,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-#if defined(__GLIBC__) || defined(__UCLIBC__)
-#include <sys/sysctl.h>
-#endif
-
+#include <linux/sysctl.h>
 #include <sys/user.h>
 #include <fcntl.h>
 #include <paths.h>

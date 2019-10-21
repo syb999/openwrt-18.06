@@ -7,6 +7,8 @@ PKG_REV:=f4d2682804931e7aea02a869137344bb5452a3cd
 
 include $(INCLUDE_DIR)/package.mk
 
+UNAME:=Linux
+
 define Package/cpulimit
   CATEGORY:=Utilities
   TITLE:=cpulimit

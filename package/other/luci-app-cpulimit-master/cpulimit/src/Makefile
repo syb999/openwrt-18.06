@@ -1,11 +1,11 @@
 CC?=gcc
-CFLAGS?=-Wall -g
+CFLAGS?=-Wall
 TARGETS=cpulimit
 LIBS=list.o process_iterator.o process_group.o
 
 CFLAGS+= -D_GNU_SOURCE
 
-UNAME := $(shell uname)
+UNAME?=$(shell uname)
 
 ifeq ($(UNAME), FreeBSD)
 LIBS+=-lkvm
