@@ -206,6 +206,7 @@ define Package/wpad
 $(call Package/wpad/Default,$(1))
   TITLE+= (full)
   VARIANT:=wpad-full-internal
+  DEPENDS+=+libopenssl
 endef
 
 define Package/wpad/description
